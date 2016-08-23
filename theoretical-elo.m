@@ -50,12 +50,19 @@ figure(2)
 plot(lucks(:,1),lucks(:,2))
 hold on;
 
-luck = 0.05
+
+%% Luck is normally distributed
+
+luck = 0.1
 rankingDifferences = -1200:1200;
 iterations = 100;
 expectedScore = zeros(length(rankingDifferences)*length(iterations),1);
 rankingDifference = zeros(length(rankingDifferences)*length(iterations),1);
 it = 1;
+scores = {};
+for i=1:length(rankingDifferences)
+    scores{rankingDifferences(i)+max(rankingDifferences)+1} = [];
+end
 for iterate=1:iterations
     for i = 1:length(rankingDifferences)
         expectedScore(it) = 1 / ( 1 + 10^((-rankingDifferences(i))/400) );
@@ -68,6 +75,7 @@ for iterate=1:iterations
             end
         end
         rankingDifference(it) = rankingDifferences(i);
+        scores{rankingDifferences(i)+max(rankingDifferences)+1} = [scores{rankingDifferences(i)+max(rankingDifferences)+1}; expectedScore(it)];
         it = it +1;
     end
 end
@@ -79,10 +87,21 @@ for i=1:length(expectedScore)
     y=1+round(100*expectedScore(i));
     grid(x,y) = grid(x,y) +1;
 end
+subplot(2,1,1)
 imagesc(imrotate(grid(2:end-1,2:end-1),90))
+title(sprintf('All scores, luck=%2.2f, iterations=%d',luck,iterations))
 ylabel('Probability of defeat')
 xlabel('Difference in Elo ranking')
 
+meanScores = zeros(size(rankingDifferences));
+for i=1:length(scores)
+    meanScores(i) = mean(scores{i});
+end
+subplot(2,1,2)
+plot(rankingDifferences,meanScores)
+title(sprintf('Mean scores, luck=%2.2f, iterations=%d',luck,iterations))
+ylabel('Probability of winning')
+xlabel('Difference in Elo ranking')
 
 
 

@@ -18,13 +18,14 @@ xlabel('Difference in Elo score')
 d = dataW./dataN;
 time = rangeN(~isnan(d));
 conc = d(~isnan(d));
+conc = conc(find(time > -300 & time < 300));
+time = time(find(time > -300 & time < 300));
 modelFun =  @(p,x) 1-1 ./ (1 + 10.^(x./p(1))) + p(2)
 startingVals = [400,0.02];
 coefEsts = nlinfit(time, conc, modelFun, startingVals);
-xgrid = time;
+xgrid = rangeN;
 line(xgrid, modelFun(coefEsts, xgrid), 'Color','r');
 axis([-600 600 0 1])
-
 
 a = importdata('nba/nbaallelo-output.txt');
 
@@ -46,9 +47,11 @@ xlabel('Difference in Elo score')
 d = dataW./dataN;
 time = rangeN(~isnan(d));
 conc = d(~isnan(d));
+conc = conc(find(time > -300 & time < 300));
+time = time(find(time > -300 & time < 300));
 modelFun =  @(p,x) 1-1 ./ (1 + 10.^(x./p(1))) + p(2)
 startingVals = [400,0.02];
 coefEsts = nlinfit(time, conc, modelFun, startingVals);
-xgrid = time;
+xgrid = rangeN;
 line(xgrid, modelFun(coefEsts, xgrid), 'Color','r');
 axis([-600 600 0 1])
