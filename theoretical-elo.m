@@ -53,7 +53,7 @@ hold on;
 
 %% Luck is normally distributed
 
-luck = 0.1
+luck = 0.2
 rankingDifferences = -1200:1200;
 iterations = 100;
 expectedScore = zeros(length(rankingDifferences)*length(iterations),1);
@@ -65,7 +65,7 @@ for i=1:length(rankingDifferences)
 end
 for iterate=1:iterations
     for i = 1:length(rankingDifferences)
-        expectedScore(it) = 1 / ( 1 + 10^((-rankingDifferences(i))/400) );
+        expectedScore(it) = 1 / ( 1 + 10^((-rankingDifferences(i))/426.39) );
         if rand < 2
             expectedScore(it) = expectedScore(it) + luck*randn;
             if expectedScore(it) > 1
@@ -102,7 +102,7 @@ plot(rankingDifferences,meanScores)
 title(sprintf('Mean scores, luck=%2.2f, iterations=%d',luck,iterations))
 ylabel('Probability of winning')
 xlabel('Difference in Elo ranking')
-
+axis([-600 600 0 1])
 
 
     
