@@ -11,9 +11,20 @@ end
 
 subplot(2,1,1)
 plot(rangeN,dataW./dataN)
-title('Chess')
+title('Chess (starting as white)')
 ylabel('Probability of winning')
 xlabel('Difference in Elo score')
+
+d = dataW./dataN;
+time = rangeN(~isnan(d));
+conc = d(~isnan(d));
+modelFun =  @(p,x) 1-1 ./ (1 + 10.^(x./p(1))) + p(2)
+startingVals = [400,0.02];
+coefEsts = nlinfit(time, conc, modelFun, startingVals);
+xgrid = time;
+line(xgrid, modelFun(coefEsts, xgrid), 'Color','r');
+axis([-600 600 0 1])
+
 
 a = importdata('nba/nbaallelo-output.txt');
 
@@ -31,3 +42,13 @@ plot(rangeN,dataW./dataN)
 title('NBA')
 ylabel('Probability of winning')
 xlabel('Difference in Elo score')
+
+d = dataW./dataN;
+time = rangeN(~isnan(d));
+conc = d(~isnan(d));
+modelFun =  @(p,x) 1-1 ./ (1 + 10.^(x./p(1))) + p(2)
+startingVals = [400,0.02];
+coefEsts = nlinfit(time, conc, modelFun, startingVals);
+xgrid = time;
+line(xgrid, modelFun(coefEsts, xgrid), 'Color','r');
+axis([-600 600 0 1])
