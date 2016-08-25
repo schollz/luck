@@ -33,7 +33,7 @@ axis([-600 600 0 1])
 
 
 
-luck = 0.2;
+luck = 1.2;
 rankingDifferences = rangeN;
 meanScores = zeros(length(rankingDifferences),1);
 for i=1:length(rangeN)
@@ -41,18 +41,20 @@ for i=1:length(rangeN)
     for j=1:dataN(i)
         elo = 1 / ( 1 + 10^((-rankingDifferences(i))/400) ) + coefEsts(2);
         % Add luck
-        elo = elo + luck*randn;
-        if elo > 1
-            elo = 1;
-        elseif elo < 0
-            elo = 0;
-        end
+        elo = elo + luck*(rand-0.5) + luck*(rand-0.5);
         tempScores = [tempScores; elo];
     end
-    if length(tempScores)>1
+    if length(tempScores)>0
         meanScores(i) = mean(tempScores);
+        if meanScores(i) > 1
+            meanScores(i) = 1;
+        end
+        if meanScores(i) < 0
+            meanScores(i) = 0;
+        end
     end
 end
+
 
 hold on;
 rankingDifferences = rankingDifferences(find(meanScores~=0))
@@ -103,7 +105,7 @@ axis([-600 600 0 1])
 coefEsts
 
 
-luck = 0.3;
+luck = 1.2;
 rankingDifferences = rangeN;
 meanScores = zeros(length(rankingDifferences),1);
 for i=1:length(rangeN)
@@ -111,16 +113,17 @@ for i=1:length(rangeN)
     for j=1:dataN(i)
         elo = 1 / ( 1 + 10^((-rankingDifferences(i))/400) ) + coefEsts(2);
         % Add luck
-        elo = elo + randn*luck;
-        if elo > 1
-            elo = 1;
-        elseif elo < 0
-            elo = 0;
-        end
+        elo = elo + luck*(rand-0.5);
         tempScores = [tempScores; elo];
     end
-    if length(tempScores)>1
+    if length(tempScores)>0
         meanScores(i) = mean(tempScores);
+        if meanScores(i) > 1
+            meanScores(i) = 1;
+        end
+        if meanScores(i) < 0
+            meanScores(i) = 0;
+        end
     end
 end
 
