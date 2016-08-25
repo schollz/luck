@@ -10,7 +10,11 @@ for i=1:size(a,1)
 end
 
 subplot(2,1,1)
-plot(rangeN,dataW./dataN)
+x = rangeN;
+y = dataW./dataN;
+x = x(find(y~=0));
+y = y(find(y~=0));
+plot(x,y)
 title('Chess (starting as white)')
 ylabel('Probability of winning')
 xlabel('Difference in Elo score')
@@ -29,7 +33,7 @@ axis([-600 600 0 1])
 
 
 
-luck = 0.5;
+luck = 0.2;
 rankingDifferences = rangeN;
 meanScores = zeros(length(rankingDifferences),1);
 for i=1:length(rangeN)
@@ -37,7 +41,7 @@ for i=1:length(rangeN)
     for j=1:dataN(i)
         elo = 1 / ( 1 + 10^((-rankingDifferences(i))/400) ) + coefEsts(2);
         % Add luck
-        elo = elo + luck*(rand-0.5);
+        elo = elo + luck*randn;
         if elo > 1
             elo = 1;
         elseif elo < 0
@@ -76,7 +80,11 @@ for i=1:size(a,1)
 end
 
 subplot(2,1,2)
-plot(rangeN,dataW./dataN)
+x = rangeN;
+y = dataW./dataN;
+x = x(find(y~=0));
+y = y(find(y~=0));
+plot(x,y)
 title('NBA')
 ylabel('Probability of winning')
 xlabel('Difference in Elo score')
@@ -95,7 +103,7 @@ axis([-600 600 0 1])
 coefEsts
 
 
-luck = 1.2;
+luck = 0.3;
 rankingDifferences = rangeN;
 meanScores = zeros(length(rankingDifferences),1);
 for i=1:length(rangeN)
@@ -103,7 +111,7 @@ for i=1:length(rangeN)
     for j=1:dataN(i)
         elo = 1 / ( 1 + 10^((-rankingDifferences(i))/400) ) + coefEsts(2);
         % Add luck
-        elo = elo + luck*(rand-0.5);
+        elo = elo + randn*luck;
         if elo > 1
             elo = 1;
         elseif elo < 0
