@@ -51,9 +51,13 @@ for i=1:length(rangeN)
 end
 
 hold on;
+rankingDifferences = rankingDifferences(find(meanScores~=0))
+meanScores = meanScores(find(meanScores~=0))
 plot(rankingDifferences,meanScores,'g')
 axis([-600 600 0 1])
 hold off;
+
+legend('Data',sprintf('Model fit, b=%2.0f, +%2.2f',coefEsts(1),coefEsts(2)),sprintf('Simulation luck=%2.2f',luck),'location','NorthWest')
 
 
 
@@ -91,7 +95,7 @@ axis([-600 600 0 1])
 coefEsts
 
 
-luck = 1.1;
+luck = 1.2;
 rankingDifferences = rangeN;
 meanScores = zeros(length(rankingDifferences),1);
 for i=1:length(rangeN)
@@ -113,7 +117,12 @@ for i=1:length(rangeN)
 end
 
 hold on;
+rankingDifferences = rankingDifferences(find(meanScores~=0))
+meanScores = meanScores(find(meanScores~=0))
 plot(rankingDifferences,meanScores,'g')
 axis([-600 600 0 1])
 hold off;
+
+
+legend('Data',sprintf('Model fit, b=%2.0f, +%2.2f',coefEsts(1),coefEsts(2)),sprintf('Simulation luck=%2.2f',luck),'location','NorthWest')
 
