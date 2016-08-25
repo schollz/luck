@@ -27,8 +27,41 @@ xgrid = -600:600;
 line(xgrid, modelFun(coefEsts, xgrid), 'Color','r');
 axis([-600 600 0 1])
 
-a = importdata('nba/nbaallelo-output.txt');
 
+
+luck = 0.5;
+rankingDifferences = rangeN;
+meanScores = zeros(length(rankingDifferences),1);
+for i=1:length(rangeN)
+    tempScores = [];
+    for j=1:dataN(i)
+        elo = 1 / ( 1 + 10^((-rankingDifferences(i))/400) ) + coefEsts(2);
+        % Add luck
+        elo = elo + luck*(rand-0.5);
+        if elo > 1
+            elo = 1;
+        elseif elo < 0
+            elo = 0;
+        end
+        tempScores = [tempScores; elo];
+    end
+    if length(tempScores)>1
+        meanScores(i) = mean(tempScores);
+    end
+end
+
+hold on;
+plot(rankingDifferences,meanScores,'g')
+axis([-600 600 0 1])
+hold off;
+
+
+
+
+
+
+
+a = importdata('nba/nbaallelo-output.txt');
 start = min(a(:,1));
 rangeN = min(a(:,1)):max(a(:,1))+1;
 dataW = zeros(size(rangeN));
@@ -56,3 +89,31 @@ xgrid = -600:600;
 line(xgrid, modelFun(coefEsts, xgrid), 'Color','r');
 axis([-600 600 0 1])
 coefEsts
+
+
+luck = 1.1;
+rankingDifferences = rangeN;
+meanScores = zeros(length(rankingDifferences),1);
+for i=1:length(rangeN)
+    tempScores = [];
+    for j=1:dataN(i)
+        elo = 1 / ( 1 + 10^((-rankingDifferences(i))/400) ) + coefEsts(2);
+        % Add luck
+        elo = elo + luck*(rand-0.5);
+        if elo > 1
+            elo = 1;
+        elseif elo < 0
+            elo = 0;
+        end
+        tempScores = [tempScores; elo];
+    end
+    if length(tempScores)>1
+        meanScores(i) = mean(tempScores);
+    end
+end
+
+hold on;
+plot(rankingDifferences,meanScores,'g')
+axis([-600 600 0 1])
+hold off;
+
