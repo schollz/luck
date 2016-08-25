@@ -105,7 +105,7 @@ axis([-600 600 0 1])
 coefEsts
 
 
-luck = 1.2;
+luck = 4;
 rankingDifferences = rangeN;
 meanScores = zeros(length(rankingDifferences),1);
 for i=1:length(rangeN)
@@ -113,7 +113,7 @@ for i=1:length(rangeN)
     for j=1:dataN(i)
         elo = 1 / ( 1 + 10^((-rankingDifferences(i))/400) ) + coefEsts(2);
         % Add luck
-        elo = elo + luck*(rand-0.5);
+        elo = elo + luck*(rand-0.5) + luck/2*randn;
         tempScores = [tempScores; elo];
     end
     if length(tempScores)>0

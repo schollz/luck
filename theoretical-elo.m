@@ -53,7 +53,7 @@ hold on;
 
 %% Luck is normally distributed
 
-luck = 0.2
+luck = 0.
 rankingDifferences = -1200:1200;
 iterations = 100;
 expectedScore = zeros(length(rankingDifferences)*length(iterations),1);
